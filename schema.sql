@@ -9,4 +9,4 @@ create table notes (
     created timestamp not null default now()
 );
 
-insert into notes (title, content) values ('first note', 'Hello'), ('second note', 'World')
+insert into notes (title, content) values ('first note', 'Hello'), ('second note', 'World');
