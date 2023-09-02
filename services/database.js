@@ -1,5 +1,5 @@
-import mysql from "mysql2";
-import dotenv from "dotenv";
+const mysql = require("mysql2");
+const dotenv = require("dotenv");
 
 dotenv.config();
 
@@ -12,24 +12,23 @@ const pool = mysql
   })
   .promise();
 
-export const getNotes = async () => {
-  const [rows] = await pool.query("select * from notes");
-  return rows;
-};
+module.exports = {
+  getNotes: async () => {
+    const [rows] = await pool.query("select * from notes");
+    return rows;
+  },
 
-export const getNote = async (id) => {
-  const [rows] = await pool.query("select * from notes where id = ?", [id]);
-  return rows;
-};
+  getNote: async (id) => {
+    const [rows] = await pool.query("select * from notes where id = ?", [id]);
+    return rows;
+  },
 
-export const createNote = async (title, content) => {
-  const [result] = await pool.query(
-    "insert into notes (title, content) values (?, ?)",
-    [title, content]
-  );
-  const id = result.insertId;
-  return getNote(id);
+  createNote: async (title, content) => {
+    const [result] = await pool.query(
+      "insert into notes (title, content) values (?, ?)",
+      [title, content]
+    );
+    const id = result.insertId;
+    return id;
+  },
 };
-
-const notes = await createNote("test3", "testing3");
-console.log(notes);
